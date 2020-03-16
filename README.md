@@ -31,11 +31,10 @@ sed -i "s/ingress_loadbalancer_ip_value/<YOUR INGRESS LOAD BALANCER IP>/g" kuber
 kubectl apply -f kubernetes-nginx-service-discovery/bind-dns-server/dns-server.yaml
 kubectl apply -f kubernetes-nginx-service-discovery/nginx-load-balancer/nginx.yaml
 ```
-Run the following on each of your worker nodes (if you want to use /etc/resolv.conf) or make an equivalent entry on the coredns configuration
+Make an entry on the coredns configuration for the bind dns server
 ```
-sed -i "1 i\nameserver <YOUR DNS LOAD BALANCER IP>\noptions timeout:1" /etc/resolv.conf
+kubectl edit -n kube-system cm/coredns
 ```
-CoreDNS configuration (if not modifying /etc/resolv.conf
 ```
 apiVersion: v1
 kind: ConfigMap
