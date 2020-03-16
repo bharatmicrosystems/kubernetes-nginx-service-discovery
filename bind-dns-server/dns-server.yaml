@@ -58,9 +58,9 @@ spec:
           hostPort: 53
         env:
         - name: ingress_loadbalancer_ip
-          value: "172.16.1.10"
+          value: "ingress_loadbalancer_ip_value"
         - name: dns_loadbalancer_ip
-          value: "172.16.1.10"
+          value: "dns_loadbalancer_ip_value"
         - name: zones
           value: "example.com"
 ---
