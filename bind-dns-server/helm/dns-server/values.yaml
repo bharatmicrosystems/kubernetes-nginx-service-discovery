@@ -19,6 +19,10 @@ service:
   nodePort: 30040
 
 env:
+  - name: dns_loadbalancer_ip
+    value: "172.16.1.10"
+  - name: ingress_loadbalancer_ip
+    value: "172.16.1.10"
   - name: zones
     value: "example.com"
 

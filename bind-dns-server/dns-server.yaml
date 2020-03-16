@@ -55,13 +55,14 @@ spec:
         ports:
         - containerPort: 53
           protocol: UDP
+          hostPort: 53
         env:
+        - name: ingress_loadbalancer_ip
+          value: "172.16.1.10"
+        - name: dns_loadbalancer_ip
+          value: "172.16.1.10"
         - name: zones
           value: "example.com"
-        - name: ingress_name
-          value: "ingress-nginx"
-        - name: ingress_namespace
-          value: "ingress-nginx"
 ---
 apiVersion: v1
 kind: Service
