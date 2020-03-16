@@ -1,6 +1,6 @@
 # kubernetes-nginx-service-discovery
 This project is to support using kubernetes ingress resources to route traffic using nginx to non-kubernetes endpoints
-
+![Kubernetes Design](readme.png)
 ## Pre-Requisites
 An ingress controller running within the kubernetes cluster
 For more details with regards to setup see https://github.com/kubernetes/ingress-nginx
