@@ -3,7 +3,6 @@ cd /tmp
 cp -f named.conf.template /etc/named.conf
 cp -f rndc.conf /etc/rndc.conf
 mkdir -p /etc/named/zones/
-sed -i "s/masterlb_ip/${masterlb_ip}/g" /etc/named.conf
 for i in $(echo $zones | sed "s/,/ /g")
 do
     # call your procedure/other scripts here below
@@ -17,7 +16,6 @@ EOF
     cp -f template-zone /etc/named/zones/$i
     sed -i "s/template-zone/$i/g" /etc/named.conf
     sed -i "s/template-zone/$i/g" /etc/named/zones/$i
-    sed -i "s/masterlb_ip/${masterlb_ip}/g" /etc/named/zones/$i
 done
 /usr/sbin/named -u named -c /etc/named.conf
 #Create A records now
@@ -34,7 +32,7 @@ kubectl get ingress|awk '{print $2}'| while read line; do
             echo "A record for $host already exists"
           else
             echo "Creating A record for $host"
-            echo "${host}.       IN      A       ${masterlb_ip}" >> /etc/named/zones/$i
+            echo "${host}.       IN      A       127.0.0.1" >> /etc/named/zones/$i
             rndc reload $i
           fi
         done

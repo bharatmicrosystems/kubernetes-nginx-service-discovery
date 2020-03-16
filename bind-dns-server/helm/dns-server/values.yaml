@@ -19,8 +19,6 @@ service:
   nodePort: 30040
 
 env:
-  - name: masterlb_ip
-    value: "172.16.1.6"
   - name: zones
     value: "example.com"
 

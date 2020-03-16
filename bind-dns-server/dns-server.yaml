@@ -56,8 +56,6 @@ spec:
         - containerPort: 53
           protocol: UDP
         env:
-        - name: masterlb_ip
-          value: "172.16.1.6"
         - name: zones
           value: "example.com"
 ---
