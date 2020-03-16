@@ -32,7 +32,7 @@ kubectl get ingress|awk '{print $2}'| while read line; do
             echo "A record for $host already exists"
           else
             echo "Creating A record for $host"
-            echo "${host}.       IN      A       127.0.0.1" >> /etc/named/zones/$i
+            echo "${host}.       IN      A       $(getent hosts ${ingress_name}.${ingress_namespace}.svc.cluster.local | awk \'{ print $1 }\')" >> /etc/named/zones/$i
             rndc reload $i
           fi
         done

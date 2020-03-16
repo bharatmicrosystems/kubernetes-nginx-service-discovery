@@ -13,7 +13,7 @@ rules:
       - "extensions"
       - "networking.k8s.io"
     resources:
-      - pods
+      - ingresses
     verbs:
       - get
       - list
@@ -58,6 +58,10 @@ spec:
         env:
         - name: zones
           value: "example.com"
+        - name: ingress_name
+          value: "ingress-nginx"
+        - name: ingress_namespace
+          value: "ingress-nginx"
 ---
 apiVersion: v1
 kind: Service
