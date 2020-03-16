@@ -1,18 +1,18 @@
 # kubernetes-nginx-service-discovery
-This project is to support using kubernetes ingress resources to route traffic using nginx to non-kubernetes endpoints
+This project is to support using kubernetes ingress resources to route traffic using NGINX to non-kubernetes endpoints
 ## Background
-Kubernetes provides an inbuilt service discovery, however most of the organisations at this moment do not run 100% on Kubernetes and have mixed workloads of services running K8s and VMs. While discovering services within K8s is easy however discovering services running within VMs does not get discovered natively by Kubernetes, especially the East-West communication. In order to foster internal service discovery between kubernetes resources and VM services and vice-versa, this project utilises the use of ingress resources to expose traffic to backend services running on VM. The VM can in-turn discover kubernetes services by utilising the same DNS server to make dynamic service discovery.
+Kubernetes provides inbuilt service discovery, however, most of the organisations at this moment do not run 100% on Kubernetes and have mixed workloads of services running K8s and VMs. While discovering services within K8s is easy however discovering services running within VMs do not get discovered natively by Kubernetes, especially the East-West communication, to foster internal service discovery between kubernetes resources and VM services and vice-versa, this project utilises the use of ingress resources to expose traffic to backend services running on VM. The VM can in-turn discover kubernetes services by utilising the same DNS server to make dynamic service discovery.
 
 ![Kubernetes Design](readme.png)
 ## Pre-Requisites
 An ingress controller running within the kubernetes cluster
 For more details with regards to setup see https://github.com/kubernetes/ingress-nginx
 
-An example setup is present in the repo. This exposes the Nginx Ingress controller via a node port, and an NGINX Load Balancer sits in front of the NodePort to provide a single load balanced endpoint to the setup. It also exposes the DNS server as a NodePort and NGINX Load Balancer described in the nginx.conf file caters to the DNS configuration as well.
+An example setup is present in the repo. This exposes the Nginx Ingress controller via a node port, and an NGINX Load Balancer sits in front of the NodePort to provide a single load-balanced endpoint to the setup. It also exposes the DNS server as a NodePort and NGINX Load Balancer described in the nginx.conf file caters to the DNS configuration as well.
 
-If you are using a cloud provided kubernetes setup and can expose the ingress-controller and dns-server as a load balancer service instead of a NodePort service as descried. 
+If you are using a cloud provided kubernetes setup and can expose the ingress-controller and DNS-server as a load balancer service instead of a NodePort service as described. 
 
-In any situation you should arrive with a DNS Server Load Balanacer IP and an Ingress Controller Load Balancer IP.
+In any situation, you should arrive with a DNS Server Load Balancer IP and an Ingress Controller Load Balancer IP.
 
 If you want to use the example setup do the following
 ```
@@ -21,7 +21,7 @@ kubectl apply -f kubernetes-nginx-service-discovery/ingress/mandatory.yaml
 kubectl apply -f kubernetes-nginx-service-discovery/ingress/service-nodeport.yaml
 ```
 
-You would then need to spin up a new instance of a VM where you need to install nginx and copy the nginx.conf file to /etc/nginx/nginx.conf. The nginx.conf file assumes that you have a three node cluster with node01, node02, and node03 as the host names for the worker nodes, you need to modify the nginx.conf file according to your setup.
+You would then need to spin up a new instance of a VM where you need to install nginx and copy the nginx.conf file to /etc/nginx/nginx.conf. The nginx.conf file assumes that you have a three-node cluster with node01, node02, and node03 as the hostnames for the worker nodes, you need to modify the nginx.conf file according to your setup.
 
 Steps for installing NGINX is present on https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/
 
@@ -68,7 +68,7 @@ data:
 ```
 
 ## Testing the setup
-The tests consists of a sample backend application which we would be running on a container, however you are free to spin up a VM and install NGINX in the VM to see this working.
+The tests consist of a sample backend application which we would be running on a container, however, you are free to spin up a VM and install NGINX in the VM to see this working.
 
 ```
 #Setup the backend
@@ -78,7 +78,7 @@ sed -i "s/example.com/<YOUR DOMAIN>/g" kubernetes-nginx-service-discovery/nginx-
 kubectl apply -f kubernetes-nginx-service-discovery/nginx-load-balancer/ingress.yaml
 curl -v http://nginx.<YOUR DOMAIN>
 ```
-You can modify the ingress yaml to point to any backend service to your need by modifying the backend-host (can be host name or IP of the backend service) and backend-port section in the ingress configuration. If there are multiple instances of backend service running, you can specify a comma separated list of hosts and the nginx load balancer would take care of the load balancing as well.
+You can modify the ingress yaml to point to any backend service to your need by modifying the backend-host (can be hostname or IP of the backend service) and backend-port section in the ingress configuration. If there are multiple instances of backend service running, you can specify a comma-separated list of hosts and the nginx load balancer would take care of the load balancing as well.
 ```
 ---
 apiVersion: extensions/v1beta1
