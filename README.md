@@ -1,14 +1,14 @@
 # kubernetes-nginx-service-discovery
 This project is to support using kubernetes ingress resources to route traffic using NGINX to non-kubernetes endpoints
 ## Background
-Kubernetes provides inbuilt service discovery, however, most of the organisations at this moment do not run 100% on Kubernetes and have mixed workloads of services running K8s and VMs. While discovering services within K8s is easy however discovering services running within VMs do not get discovered natively by Kubernetes, especially the East-West communication, to foster internal service discovery between kubernetes resources and VM services and vice-versa, this project utilises the use of ingress resources to expose traffic to backend services running on VM. The VM can in-turn discover kubernetes services by utilising the same DNS server to make dynamic service discovery.
+Kubernetes provides inbuilt service discovery, however, most of the organisations at this moment do not run 100% on Kubernetes and have mixed workloads of services running K8s and VMs. While discovering services within K8s is easy, services running within VMs do not get discovered natively by Kubernetes, especially the East-West communication. To foster internal service discovery between kubernetes resources and VM services and vice-versa, this project utilises the use of ingress resources to expose traffic to backend services running on VM. The VM can in-turn discover kubernetes services by utilising the same DNS server to make dynamic service discovery.
 
 ![Kubernetes Design](readme.png)
 ## Pre-Requisites
 An ingress controller running within the kubernetes cluster
 For more details with regards to setup see https://github.com/kubernetes/ingress-nginx
 
-An example setup is present in the repo. This exposes the Nginx Ingress controller via a node port, and an NGINX Load Balancer sits in front of the NodePort to provide a single load-balanced endpoint to the setup. It also exposes the DNS server as a NodePort and NGINX Load Balancer described in the nginx.conf file caters to the DNS configuration as well.
+An example setup is present in the repo. This exposes the Nginx Ingress controller via a NodePort, and an NGINX Load Balancer sits in front of the NodePort to provide a single load-balanced endpoint to the setup. It also exposes the DNS server as a NodePort and NGINX Load Balancer described in the nginx.conf file caters to the DNS configuration as well.
 
 If you are using a cloud provided kubernetes setup and can expose the ingress-controller and DNS-server as a load balancer service instead of a NodePort service as described. 
 
