@@ -49,6 +49,7 @@ data:
 
 ## Testing the setup
 ```
+sed -i "s/example.com/<YOUR DOMAIN>/g" kubernetes-nginx-service-discovery/nginx-load-balancer/ingress.yaml
 kubectl apply -f kubernetes-nginx-service-discovery/nginx-load-balancer/ingress.yaml
-curl -v http://nginx.example.com
+curl -v http://nginx.<YOUR DOMAIN>
 ```
