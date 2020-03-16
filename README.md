@@ -9,24 +9,14 @@ For more details with regards to setup see https://github.com/kubernetes/ingress
 ### Bare Metal setup
 ```
 git clone https://github.com/bharatmicrosystems/kubernetes-nginx-service-discovery.git
+sed -i "s/example.com/<COMMA SEPARATED DOMAINS>/g" /etc/resolv.conf
 kubectl apply -f kubernetes-nginx-service-discovery/bind-dns-server/dns-server.yaml
 kubectl apply -f kubernetes-nginx-service-discovery/nginx-load-balancer/nginx.yaml
 ```
-Run the following on each of your worker nodes
+Run the following on each of your worker nodes or make an equivalent entry on the coredns configuration
 ```
-sed -i "1 i\nameserver $(hostname -I)\noptions timeout:1" /etc/resolv.conf
+sed -i "1 i\nameserver 127.0.0.1\noptions timeout:1" /etc/resolv.conf
 ```
-### Cloud setup
-```
-git clone https://github.com/bharatmicrosystems/kubernetes-nginx-service-discovery.git
-kubectl apply -f kubernetes-nginx-service-discovery/bind-dns-server/dns-server.yaml
-kubectl apply -f kubernetes-nginx-service-discovery/nginx-load-balancer/nginx.yaml
-```
-Run the following on each of your worker nodes
-```
-sed -i "1 i\nameserver $(hostname -I)\noptions timeout:1" /etc/resolv.conf
-```
-If you are running a managed kubernetes-cluster
 ## Testing the setup
 ```
 kubectl apply -f kubernetes-nginx-service-discovery/nginx-load-balancer/ingress.yaml
