@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "dns-server.fullname" . }}
+  labels:
+{{ include "dns-server.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 53
+      protocol: TCP
+      nodePort: {{ .Values.service.nodePort }}
+      name: dns
+  selector:
+    app.kubernetes.io/name: {{ include "dns-server.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

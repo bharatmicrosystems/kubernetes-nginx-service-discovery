@@ -1,0 +1,15 @@
+$TTL 604800
+@       IN      SOA     template-zone. admin.template-zone. (
+        9               ; Serial
+        604800          ; Refresh
+        86400           ; Retry
+        2419200         ; Expire
+        604800 )        ; Negative Cache TTL
+
+; NS records
+@       IN      NS      ns.template-zone.
+
+; NS A records
+ns.template-zone.      IN      A       masterlb_ip
+
+; Other Hosts A records

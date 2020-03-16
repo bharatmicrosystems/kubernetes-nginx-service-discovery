@@ -1,0 +1,41 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-backend-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  labels:
+    backend-host: "nginx-backend"
+    backend-port: "80"
+spec:
+  rules:
+  - host: nginx.example.com
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: nginx-load-balancer
+            servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-backend-ingress-new
+  annotations:
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  labels:
+    backend-host: "nginx-backend"
+    backend-port: "80"
+spec:
+  rules:
+  - host: nginxnew.example.com
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: nginx-load-balancer
+            servicePort: 80
+
