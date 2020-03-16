@@ -1,5 +1,8 @@
 # kubernetes-nginx-service-discovery
 This project is to support using kubernetes ingress resources to route traffic using nginx to non-kubernetes endpoints
+## Background
+Kubernetes provides an inbuilt service discovery, however most of the organisations at this moment do not run 100% on Kubernetes and have mixed workloads of services running K8s and VMs. While discovering services within K8s is easy however discovering services running within VMs does not get discovered natively by Kubernetes, especially the East-West communication. In order to foster internal service discovery between kubernetes resources and VM services and vice-versa, this project utilises the use of ingress resources to expose traffic to backend services running on VM. The VM can in-turn discover kubernetes services by utilising the same DNS server to make dynamic service discovery.
+
 ![Kubernetes Design](readme.png)
 ## Pre-Requisites
 An ingress controller running within the kubernetes cluster
@@ -65,8 +68,36 @@ data:
 ```
 
 ## Testing the setup
+The tests consists of a sample backend application which we would be running on a container, however you are free to spin up a VM and install NGINX in the VM to see this working.
+
 ```
+#Setup the backend
+kubectl apply -f kubernetes-nginx-service-discovery/nginx-load-balancer/test-backend/deployment.yaml
+#Setup the ingress
 sed -i "s/example.com/<YOUR DOMAIN>/g" kubernetes-nginx-service-discovery/nginx-load-balancer/ingress.yaml
 kubectl apply -f kubernetes-nginx-service-discovery/nginx-load-balancer/ingress.yaml
 curl -v http://nginx.<YOUR DOMAIN>
+```
+You can modify the ingress yaml to point to any backend service to your need by modifying the backend-host (can be host name or IP of the backend service) and backend-port section in the ingress configuration. If there are multiple instances of backend service running, you can specify a comma separated list of hosts and the nginx load balancer would take care of the load balancing as well.
+```
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-backend-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  labels:
+    backend-host: "nginx-backend-host1,nginx-backend-host2"
+    backend-port: "80"
+spec:
+  rules:
+  - host: nginx.example.com
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: nginx-load-balancer
+            servicePort: 80
 ```
