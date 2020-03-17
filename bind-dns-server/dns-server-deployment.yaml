@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dns-kubectl
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: list-ingress
+rules:
+  - apiGroups:
+      - "extensions"
+      - "networking.k8s.io"
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: list-ingress-to-sa
+subjects:
+  - kind: ServiceAccount
+    name: dns-kubectl
+roleRef:
+  kind: Role
+  name: list-ingress
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dns-server-deployment
+  labels:
+    app: dns-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dns-server
+  template:
+    metadata:
+      labels:
+        app: dns-server
+    spec:
+      serviceAccountName: dns-kubectl
+      containers:
+      - name: dns-server
+        image: bharamicrosystems/dns-bind:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 53
+          protocol: UDP
+          hostPort: 53
+        env:
+        - name: ingress_loadbalancer_ip
+          value: "ingress_loadbalancer_ip_value"
+        - name: dns_loadbalancer_ip
+          value: "dns_loadbalancer_ip_value"
+        - name: zones
+          value: "example.com"
