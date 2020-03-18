@@ -50,6 +50,14 @@ spec:
                     data = data.replace('"#backend_hosts_value', ','+server_host+'"#backend_hosts_value')
             try:
                 file.write(data)
+                arguments = ['/usr/bin/kubectl','apply', '-f', '/opt/bin/ingress/'+name+'.yaml']
+                p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
+                output, error = p.communicate()
+                if p.returncode > 1:
+                    self.send_response(550, message='Kubectl apply failure')
+                    self.end_headers()
+                    self.wfile.write(output)
+                    self.wfile.write(error)
             finally:
                 file.close()
 
