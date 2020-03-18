@@ -1,6 +1,5 @@
 FROM python:2.7
-FROM rmg/centos-jdk:8u131
-MAINTAINER Gaurav Agarwal, gaurav.a.agarwal@capgemini.com
+MAINTAINER Gaurav Agarwal
 
 COPY server.py /opt/bin/server.py
 COPY getResponse.sh /opt/bin/getResponse.sh
