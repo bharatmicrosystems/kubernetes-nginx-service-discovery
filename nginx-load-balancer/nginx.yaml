@@ -97,4 +97,3 @@ spec:
           backend:
             serviceName: nginx-load-balancer
             servicePort: 8997
-
