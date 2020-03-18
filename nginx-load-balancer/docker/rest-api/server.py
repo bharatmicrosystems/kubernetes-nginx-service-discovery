@@ -25,7 +25,7 @@ metadata:
     nginx.ingress.kubernetes.io/add-base-url: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
   labels:
-    backend-host: backend_host_value
+    backend-host: backend_hosts_value
     backend-port: "backend_port_value"
 spec:
   rules:
@@ -42,12 +42,12 @@ spec:
             if (name not in data) or (host not in data) or (port not in data):
                 data = template_data
                 data = data.replace("name_value", name)
-                data = data.replace('backend_host_value', '"'+server_host+'"#backend_host_value')
+                data = data.replace('backend_hosts_value', '"'+server_host+'"#backend_hosts_value')
                 data = data.replace("host_value", host)
                 data = data.replace("backend_port_value", port)
             else:
                 if (server_host not in data):
-                    data = data.replace('"#backend_host_value', ','+server_host+'"#backend_host_value')
+                    data = data.replace('"#backend_hosts_value', ','+server_host+'"#backend_hosts_value')
             try:
                 file.write(data)
             finally:
