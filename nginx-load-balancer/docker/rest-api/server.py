@@ -69,7 +69,7 @@ class S(BaseHTTPRequestHandler):
                 #arguments = ['/opt/bin/getResponse.sh','%s' % jiratask,'%s' % changenumber,'%s' % changedate,'%s' % changestarttime,'%s' % changeendtime,'%s' % changeimplementer,'%s' % environment,'%s' % servers,'%s' % project,'%s' %interfaceid,'%s' % release,'%s' % username,'%s' % password,'%s' % changeSysId]
                 #p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
                 self.wfile.write('Setting up ingress...')
-                self._setup_ingress(self, name, host, server_host, port)
+                self._setup_ingress(name, host, server_host, port)
                 #output, error = p.communicate()
                 #if p.returncode > 1:
                 #    self.send_response(550, message='Sync Failure(s)')
@@ -81,8 +81,8 @@ class S(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(output)
         except Exception as e:
-            self.wfile.write(e)
             self.send_response(500)
+            self.wfile.write(e)
 def run(server_class=HTTPServer, handler_class=S, port=8997):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
