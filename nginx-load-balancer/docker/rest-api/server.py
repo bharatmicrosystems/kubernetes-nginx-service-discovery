@@ -50,6 +50,7 @@ spec:
                     data = data.replace('"#backend_hosts_value', ','+server_host+'"#backend_hosts_value')
             try:
                 file.write(data)
+                file.close()
                 file_name = '/opt/bin/ingress/'+name+'.yaml'
                 arguments = ['/usr/bin/kubectl','apply', '-f', '%s' % file_name]
                 self.wfile.write(arguments)
