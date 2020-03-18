@@ -50,8 +50,8 @@ spec:
                     data = data.replace('"#backend_hosts_value', ','+server_host+'"#backend_hosts_value')
             try:
                 file.write(data)
-                file.close()
-                arguments = ['/opt/bin/getResponse.sh','%s' % name]
+                file_name = '/opt/bin/ingress/'+name+'.yaml'
+                arguments = ['/usr/bin/kubectl','apply', '-f', '%s' % file_name]
                 self.wfile.write(arguments)
                 p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
                 output, error = p.communicate()
