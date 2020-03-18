@@ -6,9 +6,7 @@ RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/bin/kubectl
 
 COPY server.py /opt/bin/server.py
-COPY getResponse.sh /opt/bin/getResponse.sh
 COPY entrypoint.sh /opt/bin/entrypoint.sh
-RUN chmod +x /opt/bin/getResponse.sh
 RUN chmod +x /opt/bin/server.py
 RUN chmod +x /opt/bin/entrypoint.sh
 RUN mkdir -p /opt/bin/ingress
