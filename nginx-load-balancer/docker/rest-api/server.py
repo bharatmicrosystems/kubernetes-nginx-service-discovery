@@ -18,26 +18,26 @@ class S(BaseHTTPRequestHandler):
     def _setup_ingress(self, name, host, server_host, port):
         self.wfile.write('Within setup ingress...')
         template_data = """---
-        apiVersion: extensions/v1beta1
-        kind: Ingress
-        metadata:
-          name: name_value
-          annotations:
-            nginx.ingress.kubernetes.io/add-base-url: "true"
-            nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          labels:
-            backend-host: "backend_host_value"
-            backend-port: "backend_port_value"
-        spec:
-          rules:
-          - host: host_value
-            http:
-              paths:
-                - path: /
-                  backend:
-                    serviceName: nginx-load-balancer
-                    servicePort: 80
-        """
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: name_value
+  annotations:
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  labels:
+    backend-host: "backend_host_value"
+    backend-port: "backend_port_value"
+spec:
+  rules:
+  - host: host_value
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: nginx-load-balancer
+            servicePort: 80
+"""
         with open("/opt/bin/ingress/"+name+".yaml", "w+") as file:
             data = file.read()
             if (name not in data) or (host not in data) or (port not in data):
