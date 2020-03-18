@@ -68,15 +68,14 @@ class S(BaseHTTPRequestHandler):
                 print('Values obtained : name: '+name+' host:'+host+' server_host: '+server_host+' port: '+port)
                 #arguments = ['/opt/bin/getResponse.sh','%s' % jiratask,'%s' % changenumber,'%s' % changedate,'%s' % changestarttime,'%s' % changeendtime,'%s' % changeimplementer,'%s' % environment,'%s' % servers,'%s' % project,'%s' %interfaceid,'%s' % release,'%s' % username,'%s' % password,'%s' % changeSysId]
                 #p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
-                    print('Setting up ingress...')
-                    self._setup_ingress(self, name, host, server_host, port)
-                    #output, error = p.communicate()
-
-                    #if p.returncode > 1:
-                    #    self.send_response(550, message='Sync Failure(s)')
-                    #    self.end_headers()
-                    #    self.wfile.write(output)
-                    #    self.wfile.write(error)
+                print('Setting up ingress...')
+                self._setup_ingress(self, name, host, server_host, port)
+                #output, error = p.communicate()
+                #if p.returncode > 1:
+                #    self.send_response(550, message='Sync Failure(s)')
+                #    self.end_headers()
+                #    self.wfile.write(output)
+                #    self.wfile.write(error)
             output = 'OK'
             self.send_response(200)
             self.end_headers()
