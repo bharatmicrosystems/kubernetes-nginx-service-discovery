@@ -55,6 +55,7 @@ spec:
                 p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
                 output, error = p.communicate()
                 self.wfile.write(output)
+                self.wfile.write(error)
                 if p.returncode > 1:
                     self.send_response(550, message='Kubectl apply failure')
                     self.end_headers()
