@@ -81,8 +81,8 @@ class S(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(output)
         except Exception as e:
-            self.send_response(500)
             self.wfile.write(e)
+            self.send_response(500)
 def run(server_class=HTTPServer, handler_class=S, port=8997):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
