@@ -43,11 +43,11 @@ spec:
                 data = template_data
                 data = data.replace("name_value", name)
                 data = data.replace("host_value", host)
-                data = data.replace("backend_host_value", server_host+"#backend_host_value")
+                data = data.replace("backend_host_value", server_host+'#backend_host_value')
                 data = data.replace("backend_port_value", port)
             else:
                 if (server_host not in data):
-                    data = data.replace("#backend_host_value", ","+server_host+"#backend_host_value")
+                    data = data.replace('#backend_host_value', ','+server_host+'#backend_host_value')
             try:
                 file.write(data)
             finally:
