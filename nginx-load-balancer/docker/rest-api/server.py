@@ -67,7 +67,7 @@ class S(BaseHTTPRequestHandler):
             host = item['ingress_host']
             server_host = item['server_host']
             port = item['port']
-            self.wfile.write('Values obtained : name: '+name+' host:'+ingress_host+' server_host: '+server_host+' port: '+port)
+            self.wfile.write('Values obtained : name: '+name+' host:'+host+' server_host: '+server_host+' port: '+port)
             #arguments = ['/opt/bin/getResponse.sh','%s' % jiratask,'%s' % changenumber,'%s' % changedate,'%s' % changestarttime,'%s' % changeendtime,'%s' % changeimplementer,'%s' % environment,'%s' % servers,'%s' % project,'%s' %interfaceid,'%s' % release,'%s' % username,'%s' % password,'%s' % changeSysId]
             #p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
             try:
