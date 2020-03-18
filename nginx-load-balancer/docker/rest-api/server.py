@@ -50,6 +50,7 @@ spec:
                     data = data.replace('"#backend_hosts_value', ','+server_host+'"#backend_hosts_value')
             try:
                 file.write(data)
+                file.close()
                 arguments = ['/opt/bin/getResponse.sh','%s' % name]
                 self.wfile.write(arguments)
                 p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
