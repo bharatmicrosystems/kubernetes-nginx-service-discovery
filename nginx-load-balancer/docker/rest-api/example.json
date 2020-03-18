@@ -1,0 +1,8 @@
+[
+{
+  "name": "nginx-backend-ingress-example",
+  "ingress_host": "nginx.example.com",
+  "server_host": "nginx-backend",
+  "port": "80"
+}
+]

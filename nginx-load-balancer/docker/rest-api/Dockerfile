@@ -8,6 +8,9 @@ RUN chmod +x /opt/bin/getResponse.sh
 RUN chmod +x /opt/bin/server.py
 RUN chmod +x /opt/bin/entrypoint.sh
 RUN mkdir -p /opt/bin/ingress
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.17.4/bin/linux/amd64/kubectl
+RUN chmod +x ./kubectl
+RUN mv ./kubectl /usr/bin/kubectl
 # Set working directory
 WORKDIR /opt/bin
 

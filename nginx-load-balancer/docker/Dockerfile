@@ -15,6 +15,7 @@ RUN chmod +x /usr/sbin/nginx
 RUN chmod +x /usr/sbin/entrypoint.sh
 
 RUN mkdir -p /etc/nginx/vhosts
+RUN mkdir -p /tmp/ingress
 
 EXPOSE 80 443
 
