@@ -15,7 +15,8 @@ class S(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
-    def _setup_ingress(name, host, server_host, port):
+    def _setup_ingress(self, name, host, server_host, port):
+        self.wfile.write('Within setup ingress...')
         template_data = """---
         apiVersion: extensions/v1beta1
         kind: Ingress
