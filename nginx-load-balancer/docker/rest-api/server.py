@@ -52,6 +52,7 @@ spec:
                 file.write(data)
                 file_name = '/opt/bin/ingress/'+name+'.yaml'
                 arguments = ['/usr/bin/kubectl','apply', '-f', '%s' % file_name]
+                self.wfile.write(arguments)
                 p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
                 output, error = p.communicate()
                 self.wfile.write(output)
