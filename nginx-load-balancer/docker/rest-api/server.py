@@ -42,8 +42,8 @@ spec:
             if (name not in data) or (host not in data) or (port not in data):
                 data = template_data
                 data = data.replace("name_value", name)
-                data = data.replace("host_value", host)
                 data = data.replace('backend_host_value', '"'+server_host+'"#backend_host_value')
+                data = data.replace("host_value", host)
                 data = data.replace("backend_port_value", port)
             else:
                 if (server_host not in data):
