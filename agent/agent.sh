@@ -1,6 +1,6 @@
 #!/bin/sh
 config_dir=/etc/kubernetes-nginx-service-discovery/conf/
-domain=etp.royalmailgroup.net
+domain=example.com
 while inotifywait --exclude '/\.' -qqre close_write "$config_dir"; do
     for file in ${config_dir}*
     do
