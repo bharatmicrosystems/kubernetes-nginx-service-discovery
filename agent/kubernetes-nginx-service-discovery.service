@@ -1,0 +1,12 @@
+[Unit]
+Description=Kubernetes NGINX Service Discovery Agent
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kubernetes-nginx-service-discovery-agent.sh
+TimeoutStartSec=0
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

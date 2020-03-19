@@ -1,6 +1,6 @@
 #!/bin/sh
-config_dir=/etc/kubernetes-nginx-service-discovery/conf/
-domain=example.com
+config_dir=config_dir_ph
+domain=domain_ph
 while inotifywait --exclude '/\.' -qqre close_write "$config_dir"; do
     for file in ${config_dir}*
     do
