@@ -6,14 +6,22 @@ while true; do
   ingress_host=$(kubectl get ingress $line | awk '{print $2}'|sed -n 2p)
   echo $ingress_host
   # Get the value of the backend-host
-  backend_hosts=$(kubectl get ingress nginx-backend-ingress -o jsonpath='{.metadata.labels.backend-host}')
-  backend_port=$(kubectl get ingress nginx-backend-ingress -o jsonpath='{.metadata.labels.backend-port}')
+  backend_hosts=$(kubectl get ingress $line -o jsonpath='{.metadata.labels.backend-host}')
+  backend_port=$(kubectl get ingress $line -o jsonpath='{.metadata.labels.backend-port}')
   echo $backend_hosts
   echo $backend_port
+  flag=false
   if [ -f "/etc/nginx/vhosts/${ingress_host}.conf" ]; then
-     echo "Entry for $ingress_host already exists"
+    echo "Entry for $ingress_host already exists"
+    if grep -q ":$backend_port" "/etc/nginx/vhosts/${ingress_host}.conf"; then
+      echo "Backend port $backend_port correct" 
+      flag=true
+    fi
+  fi
+  if $flag; then
+    echo "Ingress file need not be generated"
   else
-     cat <<EOF > /etc/nginx/vhosts/${ingress_host}.conf
+    cat <<EOF > /etc/nginx/vhosts/${ingress_host}.conf
     server {
         listen     80;
         server_name ingress_host;
@@ -26,13 +34,13 @@ while true; do
         # server servername:port;
     }
 EOF
-     sed -i "s/ingress_host/$ingress_host/g" /etc/nginx/vhosts/${ingress_host}.conf
-     sed -i "s/backend_port/$backend_port/g" /etc/nginx/vhosts/${ingress_host}.conf
-     sed -i "s/servername/${ingress_host}_servername/g" /etc/nginx/vhosts/${ingress_host}.conf
-   fi
-   for backend_host in $(echo $backend_hosts | sed "s/,/ /g")
+    sed -i "s/ingress_host/$ingress_host/g" /etc/nginx/vhosts/${ingress_host}.conf
+    sed -i "s/backend_port/$backend_port/g" /etc/nginx/vhosts/${ingress_host}.conf
+    sed -i "s/servername/${ingress_host}_servername/g" /etc/nginx/vhosts/${ingress_host}.conf
+  fi
+  for backend_host in $(echo $backend_hosts | sed "s/,/ /g")
    do
-     if grep -q $backend_host "/etc/nginx/vhosts/${ingress_host}.conf"; then
+     if grep -q "$backend_host" "/etc/nginx/vhosts/${ingress_host}.conf"; then
        # Do nothing
        echo "Record for $backend_host already exists"
      else
